@@ -1,6 +1,26 @@
 node {
+
     stage ('Initialization') {
         sh 'echo dummy step'
         sh 'sleep 20'
+
     } 
+
+    stage ('Testing') {
+        parallel ubuntu: {
+            node ('ubuntu') {
+                sh 'echo hello from ubuntu'
+                sh 'sleep 30'
+            }
+        },
+
+        centos: {
+            sh 'echo hello from Centos'
+            sh 'sleep 30'
+        }
+    }
+
+    stage ('Notify People') {
+           sh 'echo hello people'
+    }
 }
